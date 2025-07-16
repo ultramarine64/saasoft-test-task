@@ -1,0 +1,38 @@
+# Environments
+.env
+.env.*
+.DS_Store
+node_modules
+/dist
+/public
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-store/
+
+# IDEs and editors
+.idea
+.vscode
+*.iml
+*.iws
+*.ipr
+
+# OS
+.project
+.classpath
+.settings
+ehcache.xml
+target/
+*.log
+*.sql
+*.hprof
+*.class
+
+# TypeScript
+*.tsbuildinfo
+
+# Vite
+.vite/
