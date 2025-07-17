@@ -24,13 +24,13 @@
 
       <div class="account-list">
         <AccountForm
-          v-for="account in accounts"
+          v-for="account in accountStore.accounts"
           :key="account.id"
           :account="account"
           @delete="deleteAccount"
-          @update="updateAccount"
+          @update="handleAccountUpdate"
         />
-        <p v-if="!accounts.length" class="no-accounts-message">
+        <p v-if="!accountStore.accounts.length" class="no-accounts-message">
           Нажмите "+" для добавления первой учетной записи.
         </p>
       </div>
@@ -39,24 +39,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { useAccountStore } from '@/stores/accounts';
 import AccountForm from '@/components/AccountForm.vue';
 import { Plus, InfoFilled } from '@element-plus/icons-vue';
 import { ElButton, ElCard, ElContainer, ElHeader, ElMain, ElMessage, ElTooltip, ElIcon } from 'element-plus';
 import { Account } from '@/types';
 
-const accounts = ref<Account[]>([]);
+const accountStore = useAccountStore();
 
 const addAccount = () => {
-  const newAccount: Account = {
-    id: Date.now().toString(),
-    labels: '',
-    accountType: 'Локальная',
-    login: '',
-    password: '',
-    isValid: false,
-  };
-  accounts.value.push(newAccount);
+  accountStore.addAccount();
   ElMessage({
     message: 'Новая учетная запись добавлена',
     type: 'success',
@@ -64,18 +56,15 @@ const addAccount = () => {
 };
 
 const deleteAccount = (id: string) => {
-  accounts.value = accounts.value.filter(acc => acc.id !== id);
+  accountStore.deleteAccount(id);
   ElMessage({
     message: 'Учетная запись удалена',
     type: 'success',
   });
 };
 
-const updateAccount = (updatedAccount: Account) => {
-  const index = accounts.value.findIndex(acc => acc.id === updatedAccount.id);
-  if (index !== -1) {
-    accounts.value[index] = updatedAccount;
-  }
+const handleAccountUpdate = (updatedAccount: Account) => {
+  accountStore.updateAccount(updatedAccount);
 };
 </script>
 

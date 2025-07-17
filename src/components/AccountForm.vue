@@ -5,7 +5,7 @@
         <el-col :span="6">
           <el-form-item label="Метки" :class="{ 'is-error': labelsError }">
             <el-input
-              v-model="localAccount.labels"
+              v-model="rawLabelsInput"
               placeholder="Метки (через ;)"
               @blur="validateLabels"
               :class="{ 'input-error': labelsError }"
@@ -102,6 +102,8 @@ const emit = defineEmits(['delete', 'update']);
 
 const localAccount = ref<Account>({ ...props.account });
 
+const rawLabelsInput = ref<string>('');
+
 const labelsError = ref<boolean>(false);
 const loginError = ref<boolean>(false);
 const passwordError = ref<boolean>(false);
@@ -112,7 +114,7 @@ const passwordFieldType = computed(() =>
 );
 
 const validateLabels = () => {
-  labelsError.value = localAccount.value.labels.length > 50;
+  labelsError.value = rawLabelsInput.value.length > 50;
   updateAccountValidity();
 };
 
@@ -127,8 +129,8 @@ const validatePassword = () => {
   if (localAccount.value.accountType === 'Локальная') {
     passwordError.value =
       localAccount.value.password === null ||
-      localAccount.value.password.length === 0 ||
-      localAccount.value.password.length > 100;
+      (localAccount.value.password as string).length === 0 ||
+      (localAccount.value.password as string).length > 100;
   } else {
     passwordError.value = false;
   }
@@ -146,7 +148,16 @@ const updateAccountValidity = () => {
   localAccount.value.isValid =
     isLabelsValid && isLoginValid && isPasswordValid;
 
-  emit('update', localAccount.value);
+  const emittedAccount: Account = {
+    ...localAccount.value,
+    labels: rawLabelsInput.value
+      .split(';')
+      .map((s) => s.trim())
+      .filter((s) => s.length > 0)
+      .map((s) => ({ text: s })),
+  };
+
+  emit('update', emittedAccount);
 };
 
 watch(
@@ -164,6 +175,9 @@ watch(
 );
 
 onMounted(() => {
+  rawLabelsInput.value = Array.isArray(props.account.labels)
+    ? props.account.labels.map((l) => l.text).join(';')
+    : '';
   validateLabels();
   validateLogin();
   validatePassword();
