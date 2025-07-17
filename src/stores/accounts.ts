@@ -41,8 +41,8 @@ export const useAccountStore = defineStore('accounts', () => {
 
   const saveAccounts = () => {
     const accountsToSave = accounts.value
-      .filter((account) => account.isValid)
-      .map((account) => {
+      .filter((account: Account) => account.isValid)
+      .map((account: Account) => {
         return { ...account, labels: formatLabels(account.labels) };
       });
     localStorage.setItem('accounts', JSON.stringify(accountsToSave));
@@ -61,7 +61,7 @@ export const useAccountStore = defineStore('accounts', () => {
   };
 
   const updateAccount = (updatedAccount: Account) => {
-    const index = accounts.value.findIndex((acc) => acc.id === updatedAccount.id);
+    const index = accounts.value.findIndex((acc: Account) => acc.id === updatedAccount.id);
     if (index !== -1) {
       accounts.value[index] = updatedAccount;
       saveAccounts();
@@ -69,7 +69,7 @@ export const useAccountStore = defineStore('accounts', () => {
   };
 
   const deleteAccount = (id: string) => {
-    accounts.value = accounts.value.filter((acc) => acc.id !== id);
+    accounts.value = accounts.value.filter((acc: Account) => acc.id !== id);
     saveAccounts();
   };
 

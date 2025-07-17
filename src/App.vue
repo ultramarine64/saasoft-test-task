@@ -39,10 +39,10 @@
 </template>
 
 <script setup lang="ts">
-import { useAccountStore } from '@/stores/accounts';
-import AccountForm from '@/components/AccountForm.vue';
 import { Plus, InfoFilled } from '@element-plus/icons-vue';
 import { ElButton, ElCard, ElContainer, ElHeader, ElMain, ElMessage, ElTooltip, ElIcon } from 'element-plus';
+import { useAccountStore } from '@/stores/accounts';
+import AccountForm from '@/components/AccountForm.vue';
 import { Account } from '@/types';
 
 const accountStore = useAccountStore();
@@ -74,6 +74,7 @@ const handleAccountUpdate = (updatedAccount: Account) => {
   flex-direction: column;
   min-height: 100vh;
   background-color: #f5f7fa;
+  padding: 12px;
 }
 
 .header {

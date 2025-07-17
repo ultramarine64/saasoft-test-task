@@ -92,7 +92,7 @@ import {
   ElButton,
   ElIcon,
 } from 'element-plus';
-import { Account } from '@/types';
+import { Account, Label } from '@/types';
 
 const props = defineProps<{
   account: Account;
@@ -119,9 +119,7 @@ const validateLabels = () => {
 };
 
 const validateLogin = () => {
-  loginError.value =
-    localAccount.value.login.length === 0 ||
-    localAccount.value.login.length > 100;
+  loginError.value = !localAccount.value.login.length || localAccount.value.login.length > 100;
   updateAccountValidity();
 };
 
@@ -145,8 +143,7 @@ const updateAccountValidity = () => {
     isPasswordValid = !passwordError.value;
   }
 
-  localAccount.value.isValid =
-    isLabelsValid && isLoginValid && isPasswordValid;
+  localAccount.value.isValid = isLabelsValid && isLoginValid && isPasswordValid;
 
   const emittedAccount: Account = {
     ...localAccount.value,
@@ -165,10 +162,8 @@ watch(
   (newType) => {
     if (newType === 'LDAP') {
       localAccount.value.password = null;
-    } else {
-      if (localAccount.value.password === null) {
-        localAccount.value.password = '';
-      }
+    } else if (localAccount.value.password === null) {
+      localAccount.value.password = '';
     }
     validatePassword();
   }
@@ -176,7 +171,7 @@ watch(
 
 onMounted(() => {
   rawLabelsInput.value = Array.isArray(props.account.labels)
-    ? props.account.labels.map((l) => l.text).join(';')
+    ? props.account.labels.map((l: Label) => l.text).join(';')
     : '';
   validateLabels();
   validateLogin();
