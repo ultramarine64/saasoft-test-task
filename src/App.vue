@@ -43,15 +43,7 @@ import { ref } from 'vue';
 import AccountForm from '@/components/AccountForm.vue';
 import { Plus, InfoFilled } from '@element-plus/icons-vue';
 import { ElButton, ElCard, ElContainer, ElHeader, ElMain, ElMessage, ElTooltip, ElIcon } from 'element-plus';
-
-interface Account {
-  id: string;
-  labels: string;
-  accountType: 'Локальная' | 'LDAP';
-  login: string;
-  password: string | null;
-  isValid: boolean;
-}
+import { Account } from '@/types';
 
 const accounts = ref<Account[]>([]);
 
@@ -83,10 +75,6 @@ const updateAccount = (updatedAccount: Account) => {
   const index = accounts.value.findIndex(acc => acc.id === updatedAccount.id);
   if (index !== -1) {
     accounts.value[index] = updatedAccount;
-    ElMessage({
-      message: 'Учетная запись обновлена',
-      type: 'success',
-    });
   }
 };
 </script>

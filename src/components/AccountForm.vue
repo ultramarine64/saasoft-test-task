@@ -92,15 +92,7 @@ import {
   ElButton,
   ElIcon,
 } from 'element-plus';
-
-interface Account {
-  id: string;
-  labels: string;
-  accountType: 'Локальная' | 'LDAP';
-  login: string;
-  password: string | null;
-  isValid: boolean;
-}
+import { Account } from '@/types';
 
 const props = defineProps<{
   account: Account;
