@@ -2,7 +2,7 @@
   <el-card class="account-card" :class="{ 'invalid-card': !localAccount.isValid }">
     <el-form :model="localAccount" label-position="top" class="account-form">
       <el-row :gutter="20">
-        <el-col :span="6">
+        <el-col :xs="24" :sm="12" :md="6">
           <el-form-item label="Метки" :class="{ 'is-error': labelsError }">
             <el-input
               v-model="rawLabelsInput"
@@ -17,7 +17,7 @@
           </el-form-item>
         </el-col>
 
-        <el-col :span="6">
+        <el-col :xs="24" :sm="12" :md="6">
           <el-form-item label="Тип записи">
             <el-select v-model="localAccount.accountType" @change="validatePassword">
               <el-option label="Локальная" value="Локальная"></el-option>
@@ -26,7 +26,7 @@
           </el-form-item>
         </el-col>
 
-        <el-col :span="6">
+        <el-col :xs="24" :sm="12" :md="6">
           <el-form-item label="Логин" :class="{ 'is-error': loginError }">
             <el-input
               v-model="localAccount.login"
@@ -41,7 +41,7 @@
           </el-form-item>
         </el-col>
 
-        <el-col :span="6">
+        <el-col :xs="24" :sm="12" :md="6">
           <el-form-item
             label="Пароль"
             v-if="localAccount.accountType === 'Локальная'"
@@ -188,7 +188,7 @@ const handleDelete = () => {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .account-card {
   position: relative;
   margin-bottom: 20px;
@@ -196,6 +196,7 @@ const handleDelete = () => {
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   transition: all 0.3s ease;
+  box-sizing: border-box;
 }
 
 .invalid-card {
@@ -225,5 +226,18 @@ const handleDelete = () => {
   position: absolute;
   top: 100%;
   left: 0;
+}
+
+@media (max-width: 768px) {
+  .account-card {
+    padding-right: 20px;
+    padding-bottom: 60px;
+  }
+
+  .delete-button {
+    top: auto;
+    bottom: 20px;
+    right: 20px;
+  }
 }
 </style>

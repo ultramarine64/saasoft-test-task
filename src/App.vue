@@ -16,7 +16,7 @@
           placement="top-start"
         >
           <div class="hint-text">
-            <el-icon><InfoFilled /></el-icon>
+            <el-icon :size="20"><InfoFilled /></el-icon>
             <span>Для указания нескольких меток для одной пары логин/пароль используйте разделитель: ;</span>
           </div>
         </el-tooltip>
@@ -68,7 +68,7 @@ const handleAccountUpdate = (updatedAccount: Account) => {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .common-layout {
   display: flex;
   flex-direction: column;
@@ -85,13 +85,15 @@ const handleAccountUpdate = (updatedAccount: Account) => {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   width: 100%;
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
-}
+  box-sizing: border-box;
 
-.header h1 {
-  margin: 0;
-  color: #303133;
+  h1 {
+    margin: 0;
+    color: #303133;
+    font-size: 24px;
+  }
 }
 
 .main-content {
@@ -100,11 +102,12 @@ const handleAccountUpdate = (updatedAccount: Account) => {
   display: flex;
   flex-direction: column;
   align-items: center;
+  box-sizing: border-box;
 }
 
 .hint-card {
   width: 100%;
-  max-width: 800px;
+  max-width: 1200px;
   margin-bottom: 20px;
   background-color: #e6f7ff;
   border-color: #91d5ff;
@@ -115,19 +118,18 @@ const handleAccountUpdate = (updatedAccount: Account) => {
   display: flex;
   align-items: center;
   font-size: 14px;
-}
 
-.hint-text .el-icon {
-  margin-right: 8px;
-  color: #1890ff;
+  .el-icon {
+    margin-right: 8px;
+    color: #1890ff;
+  }
 }
 
 .account-list {
   display: flex;
   flex-direction: column;
-  gap: 20px;
   width: 100%;
-  max-width: 800px;
+  max-width: 1200px;
 }
 
 .no-accounts-message {
@@ -135,5 +137,27 @@ const handleAccountUpdate = (updatedAccount: Account) => {
   color: #909399;
   font-size: 16px;
   margin-top: 50px;
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 15px;
+
+    h1 {
+      font-size: 20px;
+    }
+  }
+
+  .main-content {
+    padding: 15px;
+  }
+
+  .hint-card {
+    margin-bottom: 15px;
+  }
+
+  .hint-text {
+    font-size: 12px;
+  }
 }
 </style>
